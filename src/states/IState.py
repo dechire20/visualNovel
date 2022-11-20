@@ -6,7 +6,9 @@ class IState:
 
     def update(self):
         pass
+
     def handleInput(self):
         pass
+
     def render(self):
         pass
