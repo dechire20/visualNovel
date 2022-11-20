@@ -7,7 +7,7 @@ class IState:
     def update(self):
         pass
 
-    def handleInput(self):
+    def handleInput(self, event):
         pass
 
     def render(self):

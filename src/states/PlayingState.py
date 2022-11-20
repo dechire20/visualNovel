@@ -44,9 +44,6 @@ class PlayingState(IState.IState):
         size = 0.8
         self.character = pygame.transform.scale(self.character, (int(self.ext[0] * size), int(self.ext[1] * size)))
 
-    def start(self, handler):
-        self.handler = handler
-
     def update(self):
         pass
 

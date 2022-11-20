@@ -2,22 +2,17 @@ import pygame
 import time
 import KeyManager
 import Handler
-from states import StateMachine, PlayingState
+from states import StateMachine, PlayingState, HomeState, SettingsState
 from sys import exit
 
 
 class Game:
-    keyManager = None
-    handler = None
-    screen = pygame.surface
-
-    # screenSize = None
     def __init__(self):
         startTime = time.time()
 
         pygame.init()
 
-        self.states = ["home", "game", "load", "settings", "return"]
+        self.states = ["homeState", "playingState", "settingsState"]
         self.currentState = self.states[1]
 
         self.screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN | pygame.HWSURFACE | pygame.NOFRAME,
@@ -25,27 +20,24 @@ class Game:
         pygame.display.set_caption("Visual novel")
 
         self.clock = pygame.time.Clock()
-        self.screenSize = pygame.display.get_surface().get_size()
-
-        # Home screen
-        self.home = pygame.image.load("../res/background/home.jpg")
-        self.home = pygame.transform.scale(self.home, self.screenSize)
-
-        # Load background
-        self.loadBackground = pygame.image.load("../res/background/load.jpeg")
-        self.loadBackground = pygame.transform.scale(self.loadBackground, self.screenSize)
-
-        # Settings background
-        self.settingsBackground = pygame.image.load("../res/background/settings.jpeg")
-        self.settingsBackground = pygame.transform.scale(self.settingsBackground, self.screenSize)
 
         self.keyManager = KeyManager.KeyManager()
         self.handler = Handler.Handler(self)
 
         self.stateMachine = StateMachine.StateMachine()
+
+        # Load states
+        self.homeState = HomeState.HomeState(self.handler)
         self.gameState = PlayingState.PlayingState(self.handler)
-        self.stateMachine.add("playingState", self.gameState)
-        self.stateMachine.change("playingState")
+        self.settingsState = SettingsState.SettingsState(self.handler)
+
+        # Add states
+        self.stateMachine.add(self.states[0], self.homeState)
+        self.stateMachine.add(self.states[1], self.gameState)
+        self.stateMachine.add(self.states[2], self.settingsState)
+
+        # Initial state
+        self.stateMachine.change(self.states[0])
 
         print("--------------------------")
         print(f"Execution Time: {time.time() - startTime}")
@@ -79,32 +71,20 @@ class Game:
         self.stateMachine.update()
 
         if self.keyManager.one:
-            self.currentState = self.states[0]
+            self.currentState = self.stateMachine.change(self.states[0])
         elif self.keyManager.two:
-            self.currentState = self.states[1]
+            self.currentState = self.stateMachine.change(self.states[1])
         elif self.keyManager.three:
-            self.currentState = self.states[2]
-        elif self.keyManager.four:
-            self.currentState = self.states[3]
+            self.currentState = self.stateMachine.change(self.states[2])
 
     def render(self):
-        match self.currentState:
-            case "home":
-                self.screen.blit(self.home, (0, 0))
-            case "game":
-                self.stateMachine.render()
-            case "load":
-                self.screen.blit(self.loadBackground, (0, 0))
-            case "settings":
-                self.screen.blit(self.settingsBackground, (0, 0))
-            case "return":
-                self.currentState = "game"
+        self.stateMachine.render()
 
     def getScreen(self):
         return self.screen
 
     def getScreenSize(self):
-        return self.screenSize
+        return pygame.display.get_surface().get_size()
 
     def getKeyManager(self):
         return self.keyManager

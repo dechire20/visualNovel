@@ -10,7 +10,6 @@ class Handler:
         return self.game.getKeyManager()
 
     def getGameScreenSize(self):
-        print(self.game.getScreenSize())
         return self.game.getScreenSize()
     
     def getScreen(self):
