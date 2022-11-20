@@ -1,8 +1,6 @@
 import pygame
 import time
 import KeyManager
-import Handler
-from states import State, PlayingState
 from sys import exit
 
 class Game:
@@ -77,21 +75,14 @@ class Game:
         #self.characterRect = self.character.get_rect(midbottom = (self.screenSize[0] / 2, self.screenSize[1] / 2))
 
         self.keyManager = KeyManager.KeyManager()
-        self.handler = Handler.Handler(self)
-        self.state = State.State(self.handler) 
-        self.gameState = PlayingState.PlayingState(self.handler)
-        self.state.setState(self.gameState)
-        self.state.getState()
-
+        self.handler = Handler(self)
+        self.tester = Tester(self.handler)
+        self.tester.fard()
         print("--------------------------")
         print(f"Execution Time: {time.time() - startTime}")
         print("--------------------------")
 
 
-    def fard(self):
-        print("lloasdfasfasd")
-        
-    
     def run(self):
         while True:
             game.processEvents()
@@ -171,18 +162,35 @@ class Game:
             textRect.center = (self.screenSize[0] / 2, self.screenSize[1] / 2)
             self.screen.blit(textSurface, textRect)
             pygame.time.wait(100)
-    
+
     def getScreen(self):
         return self.screen
     def getScreenSize(self):
+        print(self.screenSize)
         return self.screenSize
     def getKeyManager(self):
         return self.keyManager
+    
+class Handler:
+    def __init__(self, game) -> None:
+        self.game = game
+
+    def getKeyManager(self):
+        return self.game.getKeyManager()
+
+    def getGameScreenSize(self):
+        return self.game.getScreenSize()
+    
+    def getScreen(self):
+        return self.game.getScreen()
+
+class Tester:
+    def __init__(self, handler: Handler) -> None:
+        self.handler = handler
+    
+    def fard(self):
+        print(self.handler.getGameScreenSize())
+
 
 game = Game()
 game.run()
-
-
-
-
-    
