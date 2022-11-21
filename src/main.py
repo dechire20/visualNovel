@@ -28,7 +28,7 @@ class Game:
 
         # Load states
         self.homeState = HomeState.HomeState(self.handler)
-        self.gameState = PlayingState.PlayingState(self.handler)
+        self.gameState = PlayingState.PlayingState(self.handler, self.stateMachine)
         self.settingsState = SettingsState.SettingsState(self.handler)
 
         # Add states
@@ -39,9 +39,9 @@ class Game:
         # Initial state
         self.stateMachine.change(self.states[0])
 
-        print("--------------------------")
+        print("----------------------------------")
         print(f"Execution Time: {time.time() - startTime}")
-        print("--------------------------")
+        print("----------------------------------")
 
     def run(self):
         while True:
@@ -64,7 +64,7 @@ class Game:
             elif event.type == pygame.KEYUP:
                 self.keyManager.keyInput(event.key, False)
 
-            self.stateMachine.handleInput(event.type)
+            self.stateMachine.handleInput(event)
 
     def update(self):
         self.keyManager.update()

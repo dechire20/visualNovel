@@ -1,74 +1,112 @@
 from states import IState
+import json
 import pygame
 
 
 class PlayingState(IState.IState):
-    def __init__(self, handler) -> None:
+    def __init__(self, handler, stateMachine) -> None:
         self.handler = handler
+        self.stateMachine = stateMachine
 
-        self.defaultFont = pygame.font.Font(None, 40)
-        self.chalkFont = pygame.font.Font("../res/fonts/chawp.ttf", 60)
+        self.defaultFont = pygame.font.Font(None, 35)
+        self.chalkFont = pygame.font.Font("../res/fonts/chawp.ttf", 30)
 
         # Buttons
         self.homeButton = self.defaultFont.render("Home", True, "Yellow")
-        self.homeButtonRect = self.homeButton.get_rect(midbottom=(700, 1085))
-
-        self.loadButton = self.defaultFont.render("Load", True, "Yellow")
-        self.loadButtonRect = self.loadButton.get_rect(
-            midbottom=(self.homeButtonRect.centerx + 200, self.homeButtonRect.top + 26))
+        self.homeButtonRect = self.homeButton.get_rect(midbottom=(700, 1080))
 
         self.settingsButton = self.defaultFont.render("Settings", True, "Yellow")
         self.settingsButtonRect = self.settingsButton.get_rect(
-            midbottom=(self.homeButtonRect.centerx + 400, self.homeButtonRect.top + 27))
+            midbottom=(self.homeButtonRect.centerx + 300, self.homeButtonRect.top + 25))
 
-        self.returnButton = self.defaultFont.render("Return", True, "Yellow")
-        self.returnButtonRect = self.returnButton.get_rect(
-            midbottom=(self.homeButtonRect.centerx + 600, self.homeButtonRect.top + 27))
+        self.saveButton = self.defaultFont.render("Save", True, "Yellow")
+        self.saveButtonRect = self.saveButton.get_rect(
+            midbottom=(self.homeButtonRect.centerx + 600, self.homeButtonRect.top + 24))
 
-        self.testMessage = self.chalkFont.render("Baka!!!!", True, "White")
+        self.testMessage = self.chalkFont.render("", True, "White")
 
-        # Game background
-        self.gameBackground = pygame.image.load("../res/background/rooftop.png")
-        # print(self.handler.getGameScreenSize())
-        self.gameBackground = pygame.transform.scale(self.gameBackground, self.handler.getGameScreenSize())
+        # Load all scenes
+        self.sceneCount = 5
+        self.currentScene = 0
+        self.backgrounds = []
+        for i in range(self.sceneCount):
+            self.backgrounds.append(pygame.image.load(f"../res/game/background/{i}.png"))
+            self.backgrounds[i] = pygame.transform.scale(self.backgrounds[i], self.handler.getGameScreenSize())
 
         # Dialogue box
-        self.dialogueBox = pygame.Surface((1200, 300))
+        self.dialogueBox = pygame.image.load("../res/game/box.png")
+        self.dialogueBox = pygame.transform.scale(self.dialogueBox, (2000, 800))
         self.dialogueBoxRect = self.dialogueBox.get_rect(
-            midbottom=((self.handler.getGameScreenSize()[0] / 2), (self.handler.getGameScreenSize()[1] / 2) + 520))
-        self.dialogueBox.fill("Black")
+            midbottom=((self.handler.getGameScreenSize()[0] / 2), (self.handler.getGameScreenSize()[1] / 2) + 530))
 
         # Character
-        self.character = pygame.image.load("../res/character/flusterlook_1.png")
+        self.character = pygame.image.load("../res/game/character/flusterlook_1.png")
         self.ext = self.character.get_rect()[2:4]
         size = 0.8
         self.character = pygame.transform.scale(self.character, (int(self.ext[0] * size), int(self.ext[1] * size)))
 
+        #  Dialogue message
+        file = open("../res/game/dialogues/dialogues.json")
+        self.scenes = json.load(file)
+        self.messages = self.scenes["scene1"]["messages"]
+        self.activeMessage = 0
+        self.message = self.messages[self.activeMessage]
+        self.textSurface = self.chalkFont.render("", True, "White")
+        self.counter = 0
+        self.animationSpeed = 1
+        self.animationDone = False
+
     def update(self):
-        pass
+        if self.counter < self.animationSpeed * len(self.message):
+            self.counter += 1
+        elif self.counter >= self.animationSpeed * len(self.message):
+            self.animationDone = True
+
+        self.textSurface = self.chalkFont.render(self.message[0:self.counter//self.animationSpeed], True, "White")
 
     def handleInput(self, event):
         mousePos = pygame.mouse.get_pos()
 
-        if event == pygame.MOUSEBUTTONDOWN:
+        if event.type == pygame.MOUSEBUTTONDOWN:
             if self.homeButtonRect.collidepoint(mousePos):
-                print("home")
-            elif self.loadButtonRect.collidepoint(mousePos):
-                print("load")
+                self.stateMachine.change("homeState")
             elif self.settingsButtonRect.collidepoint(mousePos):
-                print("settings")
-            elif self.returnButtonRect.collidepoint(mousePos):
-                print("playing")
-            pass
+                self.stateMachine.change("settingsState")
+            elif self.saveButtonRect.collidepoint(mousePos):
+                print("saved!")
+
+        elif event.type == pygame.KEYDOWN:
+            if event.key == pygame.K_RIGHT and self.currentScene < self.sceneCount - 1:
+                self.currentScene += 1
+            elif event.key == pygame.K_LEFT and self.currentScene > 0:
+                self.currentScene -= 1
+            elif event.key == pygame.K_RETURN and self.activeMessage < len(self.messages) - 1:
+                self.activeMessage += 1
+                self.animationDone = False
+                self.message = self.messages[self.activeMessage]
+                self.counter = 0
+
+    def textAnimation(self, string: str):
+        self.text = ""
+        for i in range(len(string)):
+            self.text += string
+            self.textSurface = self.chalkFont.render(self.text, True, "White")
+            self.textSurfaceRect = self.textSurface.get_rect(midbottom=(1000, 300))
+
+            self.handler.getScreen().blit(self.textSurface, self.textSurfaceRect)
+
+
 
     def render(self):
-        self.handler.getScreen().blit(self.gameBackground, (0, 0))
+        self.handler.getScreen().blit(self.backgrounds[self.currentScene], (0, 0))
         self.handler.getScreen().blit(self.character, (200, -100))
         self.handler.getScreen().blit(self.dialogueBox, self.dialogueBoxRect)
         self.handler.getScreen().blit(self.testMessage, (500, 800))
 
         # Buttons
         self.handler.getScreen().blit(self.homeButton, self.homeButtonRect)
-        self.handler.getScreen().blit(self.loadButton, self.loadButtonRect)
         self.handler.getScreen().blit(self.settingsButton, self.settingsButtonRect)
-        self.handler.getScreen().blit(self.returnButton, self.returnButtonRect)
+        self.handler.getScreen().blit(self.saveButton, self.saveButtonRect)
+
+        self.handler.getScreen().blit(self.textSurface, (600, 750))
+

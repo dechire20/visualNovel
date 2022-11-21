@@ -51,7 +51,7 @@ class Game:
         self.home = pygame.transform.scale(self.home, self.screenSize)
 
         # Game background
-        self.gameBackground = pygame.image.load("../res/background/rooftop.png")
+        self.gameBackground = pygame.image.load("../res/game/background/2.png")
         self.gameBackground = pygame.transform.scale(self.gameBackground, self.screenSize)
 
         # Load background
@@ -68,7 +68,7 @@ class Game:
         self.dialogueBox.fill("Black")
 
         # Character
-        self.character = pygame.image.load("../res/character/flusterlook_1.png")
+        self.character = pygame.image.load("../res/game/character/flusterlook_1.png")
         self.ext = self.character.get_rect()[2:4]
         size = 0.8
         self.character = pygame.transform.scale(self.character, (int(self.ext[0] * size), int(self.ext[1] * size)))
