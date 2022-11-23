@@ -28,7 +28,7 @@ class Game:
 
         # Load states
         self.homeState = HomeState.HomeState(self.handler)
-        self.gameState = PlayingState.PlayingState(self.handler, self.stateMachine)
+        self.gameState = PlayingState.PlayingState(self.handler)
         self.settingsState = SettingsState.SettingsState(self.handler)
 
         # Add states
@@ -88,6 +88,9 @@ class Game:
 
     def getKeyManager(self):
         return self.keyManager
+
+    def getStateMachine(self):
+        return self.stateMachine
 
 
 game = Game()

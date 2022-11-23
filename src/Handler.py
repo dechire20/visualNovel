@@ -1,7 +1,6 @@
-#import main
+
 
 class Handler:
-
     
     def __init__(self, game) -> None:
         self.game = game
@@ -14,5 +13,8 @@ class Handler:
     
     def getScreen(self):
         return self.game.getScreen()
+
+    def getStateMachine(self):
+        return self.game.getStateMachine()
 
 

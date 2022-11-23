@@ -4,9 +4,9 @@ import pygame
 
 
 class PlayingState(IState.IState):
-    def __init__(self, handler, stateMachine) -> None:
+    def __init__(self, handler) -> None:
         self.handler = handler
-        self.stateMachine = stateMachine
+        self.stateMachine = handler.getStateMachine()
 
         self.defaultFont = pygame.font.Font(None, 35)
         self.chalkFont = pygame.font.Font("../res/fonts/chawp.ttf", 30)
@@ -23,9 +23,7 @@ class PlayingState(IState.IState):
         self.saveButtonRect = self.saveButton.get_rect(
             midbottom=(self.homeButtonRect.centerx + 600, self.homeButtonRect.top + 24))
 
-        self.testMessage = self.chalkFont.render("", True, "White")
-
-        # Load all scenes
+        # Load all backgrounds
         self.sceneCount = 5
         self.currentScene = 0
         self.backgrounds = []
@@ -64,7 +62,7 @@ class PlayingState(IState.IState):
 
         self.textSurface = self.chalkFont.render(self.message[0:self.counter//self.animationSpeed], True, "White")
 
-    def handleInput(self, event):
+    def handleInput(self, event: pygame.event):
         mousePos = pygame.mouse.get_pos()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
@@ -86,27 +84,16 @@ class PlayingState(IState.IState):
                 self.message = self.messages[self.activeMessage]
                 self.counter = 0
 
-    def textAnimation(self, string: str):
-        self.text = ""
-        for i in range(len(string)):
-            self.text += string
-            self.textSurface = self.chalkFont.render(self.text, True, "White")
-            self.textSurfaceRect = self.textSurface.get_rect(midbottom=(1000, 300))
-
-            self.handler.getScreen().blit(self.textSurface, self.textSurfaceRect)
-
-
-
     def render(self):
         self.handler.getScreen().blit(self.backgrounds[self.currentScene], (0, 0))
         self.handler.getScreen().blit(self.character, (200, -100))
         self.handler.getScreen().blit(self.dialogueBox, self.dialogueBoxRect)
-        self.handler.getScreen().blit(self.testMessage, (500, 800))
 
         # Buttons
         self.handler.getScreen().blit(self.homeButton, self.homeButtonRect)
         self.handler.getScreen().blit(self.settingsButton, self.settingsButtonRect)
         self.handler.getScreen().blit(self.saveButton, self.saveButtonRect)
 
+        # Dialogue text
         self.handler.getScreen().blit(self.textSurface, (600, 750))
 
