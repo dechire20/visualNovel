@@ -24,19 +24,38 @@ class HomeState(IState.IState):
         self.settingsButton = self.chalkFont.render("Settings", True, "White")
         self.settingsButtonRect = self.settingsButton.get_rect(midbottom=(handler.getGameScreenSize()[0] / 2, (handler.getGameScreenSize()[1] / 2 + 160)))
 
+        # Sound
+        self.clickSound = pygame.mixer.Sound("../res/soundEffects/click_002.ogg")
+
+        # Music
+        pygame.mixer.music.load("../res/home/music/door.ogg")
+        self.isMusicOn = False
+
+        pygame.mixer.music.play()
+        self.hasNewGame = False
 
     def update(self):
-        pass
+        if not self.isMusicOn:
+            pygame.mixer.music.play()
+            self.isMusicOn = True
 
     def handleInput(self, event):
         mousePos = pygame.mouse.get_pos()
 
         if event.type == pygame.MOUSEBUTTONDOWN:
             if self.newGameButtonRect.collidepoint(mousePos):
+                pygame.mixer.music.fadeout(500)
+                pygame.mixer.Sound.play(self.clickSound)
                 self.handler.getStateMachine().change("playingState")
-            elif self.continueButtonRect.collidepoint(mousePos) and not self.hasSaved:
-                print("Continue")
+                self.handler.gameReset()
+                self.hasNewGame = True
+            elif self.continueButtonRect.collidepoint(mousePos) and not self.hasSaved and self.hasNewGame:
+                pygame.mixer.music.fadeout(500)
+                pygame.mixer.Sound.play(self.clickSound)
+                self.handler.getStateMachine().change("playingState")
             elif self.settingsButtonRect.collidepoint(mousePos):
+                pygame.mixer.music.fadeout(500)
+                pygame.mixer.Sound.play(self.clickSound)
                 self.handler.getStateMachine().change("settingsState")
 
     def render(self):
@@ -45,3 +64,4 @@ class HomeState(IState.IState):
             self.handler.getScreen().blit(self.continueButton, self.continueButtonRect)
         self.handler.getScreen().blit(self.newGameButton, self.newGameButtonRect)
         self.handler.getScreen().blit(self.settingsButton, self.settingsButtonRect)
+

@@ -1,8 +1,54 @@
 {
-  "scene1": {
-    "messages": [
-      "Hello fellow traveler have you got some beans?",
-      "sorry, I don't have beans"
+  "scene0": {
+    "dialogues": [
+      {
+        "name": "narrator",
+        "dialogue": "A vast and colourful amusement park. Full of booths crowded by people with joy and excitement in their faces. Amidst the hustle and bustle, two high schoolers came in. A girl named Isla Fontaine and her childhood friend who will be played by you."
+      },
+      {
+        "name": "isla",
+        "dialogue": "Good Morning! Thanks for inviting me here today, we finally got to hangout despite my  busy schedule."
+      },
+      {
+        "name": "narrator",
+        "dialogue": "Meet Isla Fontaine, your long time childhood friend since elementary class and now president of the student council in your highschool. Isla loves dedicating her time to her work and loves spending her free time watching magic shows. Her favourite colour is blue and she loves to eat anything sweet and hates anything spicy.\n\nGoodluck on your first date!"
+      },
+      {
+        "name": "isla",
+        "dialogue": "How have you been? I’m sorry I got too busy with the council lately"
+      },
+      {
+        "name": "you",
+        "type": "question",
+        "dialogue": "",
+        "choices": [
+          "Tell her it’s alright",
+          "Tell her to lessen her work",
+          "If you need any help, I’m always here to lend a hand"
+        ],
+        "responses": [
+          {"dialogue": "I see! I remember seeing you in the arts club last wednesday."},
+          "But I love doing my work, it’s one of the things that keeps me happy.",
+          "Really? I would love your help in handling my extra work! It can also be our special time to bond together!"
+        ]
+      },
+      {
+        "name": "narrator",
+        "dialogue": "You both strolled in the centre of the park where the small theatre show is taking place, you look to your left where the booths are filled with different kinds of stuff toys to win in. You also glanced to your right where the food stalls are full with flavorful snacks and kids filled with smiles on their faces."
+      },
+      {
+        "name": "isla",
+        "dialogue": "So what will we do today? Everything looks so fun I can’t seem to pick between the three."
+      },
+      {
+        "name": "you",
+        "type": "dialogue",
+        "dialogue": "Let’s first try the booths centre"
+      },
+      {
+        "name": "isla",
+        "dialogue": "sure!"
+      }
     ]
   }
 }
