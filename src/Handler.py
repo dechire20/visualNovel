@@ -17,4 +17,7 @@ class Handler:
     def getStateMachine(self):
         return self.game.getStateMachine()
 
+    def gameReset(self):
+        return self.game.gameReset()
+
 

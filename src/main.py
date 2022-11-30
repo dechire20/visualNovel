@@ -11,6 +11,7 @@ class Game:
         startTime = time.time()
 
         pygame.init()
+        pygame.mixer.init()
 
         self.states = ["homeState", "playingState", "settingsState"]
         self.currentState = self.states[1]
@@ -91,6 +92,9 @@ class Game:
 
     def getStateMachine(self):
         return self.stateMachine
+
+    def gameReset(self):
+        return self.gameState.reset()
 
 
 game = Game()
