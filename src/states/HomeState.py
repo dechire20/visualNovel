@@ -31,7 +31,7 @@ class HomeState(IState.IState):
         pygame.mixer.music.load("../res/home/music/door.ogg")
         self.isMusicOn = False
 
-        pygame.mixer.music.play()
+        pygame.mixer.music.play(-1)
         self.hasNewGame = False
 
     def update(self):

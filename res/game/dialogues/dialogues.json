@@ -3,22 +3,32 @@
     "dialogues": [
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "ammusmentPark",
         "dialogue": "A vast and colourful amusement park. Full of booths crowded by people with joy and excitement in their faces. Amidst the hustle and bustle, two high schoolers came in. A girl named Isla Fontaine and her childhood friend who will be played by you."
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "ammusmentPark",
         "dialogue": "Good Morning! Thanks for inviting me here today, we finally got to hangout despite my  busy schedule."
       },
       {
         "name": "narrator",
+        "expression": "smile0",
+        "background": "ammusmentPark",
         "dialogue": "Meet Isla Fontaine, your long time childhood friend since elementary class and now president of the student council in your highschool. Isla loves dedicating her time to her work and loves spending her free time watching magic shows. Her favourite colour is blue and she loves to eat anything sweet and hates anything spicy.\n\nGoodluck on your first date!"
       },
       {
         "name": "isla",
+        "expression": "pointSmile",
+        "background": "ammusmentPark",
         "dialogue": "How have you been? I’m sorry I got too busy with the council lately"
       },
       {
         "name": "you",
+        "expression": "curious",
+        "background": "ammusmentPark",
         "type": "question",
         "dialogue": "",
         "choices": [
@@ -30,47 +40,72 @@
           "I see! I remember seeing you in the arts club last wednesday.",
           "But I love doing my work, it’s one of the things that keeps me happy.",
           "Really? I would love your help in handling my extra work! It can also be our special time to bond together!"
+        ],
+        "expressions": [
+          "smile0",
+          "sad",
+          "smile1"
         ]
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "ammusmentPark",
         "dialogue": "You both strolled in the centre of the park where the small theatre show is taking place, you look to your left where the booths are filled with different kinds of stuff toys to win in. You also glanced to your right where the food stalls are full with flavorful snacks and kids filled with smiles on their faces."
       },
       {
         "name": "isla",
+        "expression": "pointSmile",
+        "background": "ammusmentPark",
         "dialogue": "So what will we do today? Everything looks so fun I can’t seem to pick between the three."
       },
       {
         "name": "you",
+        "expression": "pointSmile",
+        "background": "ammusmentPark",
         "type": "dialogue",
         "dialogue": "Let’s first try the booths centre"
       },
       {
         "name": "isla",
+        "expression": "smile0",
+        "background": "ammusmentPark",
         "dialogue": "sure!"
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "booths",
         "dialogue": "You and Isla went to the Booth corner."
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "booths",
         "dialogue": "The Balloon darts booth looks fun let’s try playing it"
       },
       {
         "name": "isla",
+        "expression": "curious",
+        "background": "darts",
         "dialogue": "it says here that popping a target will earn us a prize, I'll try first"
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "darts",
         "dialogue": "You noticed Isla missed as she shot through the centre part of the booth, giving you a tip to not shoot your darts to the centre. You also noticed that the red ones are the easiest to pop and the easiest spots are in the right corner."
       },
       {
         "name": "isla",
-        "dialogue": "aw, I only hit one. It’s your turn name! Let’s see how many you hit."
+        "expression": "sad",
+        "background": "darts",
+        "dialogue": "I only hit one. It’s your turn! Let’s see how many you hit."
       },
       {
         "name": "you",
+        "expression": "none",
+        "background": "dartsGame",
         "type": "question",
         "dialogue": "",
         "choices": [
@@ -80,14 +115,22 @@
           "Pop the red balloon in the right corner"
         ],
         "responses": [
-          "there’s still plenty of game here, it’s alright name",
-          "there’s still plenty of game here, it’s alright name",
-          "there’s still plenty of game here, it’s alright name",
+          "there’s still plenty of game here, it’s alright",
+          "there’s still plenty of game here, it’s alright",
+          "there’s still plenty of game here, it’s alright",
           "Woah, I never knew you’re good at this. It seems that they are giving you a toy as a prize"
+        ],
+        "expressions": [
+          "smile0",
+          "smile0",
+          "smile0",
+          "smile1"
         ]
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "booths",
         "dialogue": "The two of you keep playing booths the whole morning, Isla has a huge smile on her face as you wander through every game you try. She keeps on playing with the toy you had given her every now and then."
       },
 
@@ -95,39 +138,57 @@
 
       {
         "name": "isla",
+        "expression": "pointSmile",
+        "background": "booths",
         "dialogue": "Playing these booths made me exhausted, let’s go to the food stalls for lunch!"
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "foodstall",
         "dialogue": "You and Isla went to the food stalls"
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "foodstall",
         "dialogue": "Wow, everything looks delicious here!"
       },
       {
         "name": "isla",
+        "expression": "curious",
+        "background": "foodstall",
         "dialogue": "Is there anything you would like to eat? I’m happy with anything as long as it’s not spicy!"
       },
       {
         "name": "you",
+        "expression": "curious",
+        "background": "foodstall",
         "type": "dialogue",
         "dialogue": "I'd like to eat at the spicy ramen"
       },
       {
         "name": "isla",
+        "expression": "sad",
+        "background": "foodstall",
         "dialogue": "Oh you’re sure? If that’s what you really want then."
       },
       {
         "name": "isla",
+        "expression": "smile0",
+        "background": "foodstall",
         "dialogue": "I do like ramen but everything at the stall has a spicy flavour in it, I’ll just let you buy for yourself."
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "foodstall",
         "dialogue": "You ate your ramen by yourself as she wandered through the rest of the stalls, she only came back once you're done with your meal."
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "foodstall",
         "dialogue": "I’m sorry, I just saw my friend at the pastry stalls and there were some really delicious cupcakes I wanted to try! Gladly she bought me some!"
       },
 
@@ -135,31 +196,45 @@
 
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "ammusmentPark",
         "dialogue": "After lunch the two of you continued to stroll when you saw the theatre show again at the centre."
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "magicShow",
         "dialogue": "Look, the magic show is about to start! If it’s okay with you we can both watch the show."
       },
       {
         "name": "you",
+        "expression": "smile1",
+        "background": "magicShow",
         "type": "dialogue",
         "dialogue": "Sure, let's watch the magic show"
       },
       {
-        "name": "isla",
+        "name": "narrator",
+        "expression": "none",
+        "background": "magicShow",
         "dialogue": "The two of you head swiftly at the front row seats as the magic show begin."
       },
       {
-        "name": "narrator",
+        "name": "isla",
+        "expression": "smile1",
+        "background": "magicShow",
         "dialogue": "I really love watching magic shows, I’m glad you agreed on watching it with me."
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "magicShow",
         "dialogue": " Isla watched the magician show his tricks to the audience while you mesmerize her gleeful smile. You looked inside your bag and picked the gift you prepared to give her."
       },
       {
         "name": "you",
+        "expression": "none",
+        "background": "magicShow",
         "type": "question",
         "dialogue": "",
         "choices": [
@@ -171,33 +246,51 @@
           "Aw thank you so much, I'll treasure this forever",
           "Aw thank you so much, I'll treasure this forever",
           "Aw thank you so much, I'll treasure this forever"
+        ],
+        "expressions": [
+          "smile1",
+          "smile1",
+          "smile1"
         ]
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "photoBooth",
         "dialogue": "After you spent the day with Isla, You both entered the photo booth"
       },
       {
         "name": "narrator",
+        "expression": "none",
+        "background": "photoBooth",
         "dialogue": "Before the both of you leave the park after a long day of fun booths, food stalls"
       },
       {
         "name": "isla",
-        "dialogue": "I had a really great time catching up with you “mc” goodbye"
+        "expression": "smile1",
+        "background": "photoBooth",
+        "dialogue": "I had a really great time catching up with you, goodbye!"
       },
       {
         "name": "you",
+        "expression": "smile1",
+        "background": "photoBooth",
         "type": "question",
         "dialogue": "",
         "choices": [
           "You grab Isla by the waist before she leaves, I need to tell you something.",
-          "You grav Isla by the hand and confess",
+          "You grab Isla by the hand and confess",
           "Tell Isla, I had a great time too. Hopefully we can do it again."
         ],
         "responses": [
           "ending0",
           "ending1",
           "ending2"
+        ],
+        "expressions": [
+          "curious",
+          "curious",
+          "smile0"
         ]
       }
     ]
@@ -205,24 +298,34 @@
   "ending0": {
     "dialogues": [
       {
-        "name": "isla",
+        "name": "you",
+        "expression": "curious",
+        "background": "photoBooth",
         "dialogue": "As you gaze into Isla’s eyes you ”From the very start that I met you I knew I wanted a future with you, I just didn’t know what sort of future I wanted up until now, Isla after spending some time with you winning and losing and watching the sunset I realised that I really don’t know much about you Isla pass our childhood and I want to change that, Isla I like you and would very much want to get to know you better. ”"
       },
       {
         "name": "narrator",
+        "expression": "blush",
+        "background": "photoBooth",
         "dialogue": "Isla began to feel flustered for she felt the same way with “mc” and let out a slight smirk and grin"
       },
       {
         "name": "isla",
+        "expression": "blush",
+        "background": "photoBooth",
         "dialogue": "I feel the same!"
       },
       {
         "name": "you",
+        "expression": "blush",
+        "background": "photoBooth",
         "type": "dialogue",
         "dialogue": "You smile as wide as you can and ask”really Isla you do?”"
       },
       {
         "name": "narrator",
+        "expression": "blushSmile",
+        "background": "photoBooth",
         "dialogue": "The both of you hug then tears fall from your eyes, You invited Isla to the photobooth outside the park where you captured the beautiful moment."
       }
     ]
@@ -231,15 +334,21 @@
     "dialogues": [
       {
         "name": "isla",
+        "expression": "curious",
+        "background": "photoBooth",
         "dialogue": "What is it?"
       },
       {
         "name": "you",
+        "expression": "curious",
+        "background": "photoBooth",
         "type": "dialogue",
         "dialogue": "As you gaze into Isla’s eyes you say ”From the very start that I met you I knew I wanted a future with you, I just didn’t know what sort of future I wanted up until now, Isla after spending some time with you winning and losing and watching the sunset I realised that I really don’t know much about you Isla pass our childhood and I want to change that, Isla I like you and would very much want to get to know you better. ”"
       },
       {
         "name": "isla",
+        "expression": "sad",
+        "background": "photoBooth",
         "dialogue": "I like you too, I really do but not in the way you wanted it to be. I’m already contented with what we have now and I hope it will stay the same."
       }
     ]
@@ -248,10 +357,14 @@
     "dialogues": [
       {
         "name": "isla",
+        "expression": "smile0",
+        "background": "photoBooth",
         "dialogue": "Great! Then I’ll see you at school"
       },
       {
         "name": "isla",
+        "expression": "smile1",
+        "background": "photoBooth",
         "dialogue": "She smiled as she bid you farewell, you got too scared to admit your feelings to her that you ended up at the photobooth alone."
       }
     ]

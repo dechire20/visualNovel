@@ -13,21 +13,13 @@ class PlayingState(IState.IState):
 
         # Buttons
         self.homeButton = self.defaultFont.render("Home", True, "Yellow")
-        self.homeButtonRect = self.homeButton.get_rect(midbottom=(700, 1080))
-
-        self.settingsButton = self.defaultFont.render("Settings", True, "Yellow")
-        self.settingsButtonRect = self.settingsButton.get_rect(
-            midbottom=(self.homeButtonRect.centerx + 300, self.homeButtonRect.top + 25))
-
-        self.saveButton = self.defaultFont.render("Save", True, "Yellow")
-        self.saveButtonRect = self.saveButton.get_rect(
-            midbottom=(self.homeButtonRect.centerx + 600, self.homeButtonRect.top + 24))
+        self.homeButtonRect = self.homeButton.get_rect(midbottom=((self.handler.getGameScreenSize()[0] / 2) , (self.handler.getGameScreenSize()[1] / 2) + 540))
 
         # Load all backgrounds
-        self.sceneCount = 5
         self.currentScene = 0
         self.backgrounds = []
-        for i in range(self.sceneCount):
+        self.backgroundNames = ["ammusmentPark", "booths", "magicShow", "foodstall", "photoBooth", "darts", "dartsGame"]
+        for i in range(len(self.backgroundNames)):
             self.backgrounds.append(pygame.image.load(f"../res/game/background/{i}.png"))
             self.backgrounds[i] = pygame.transform.scale(self.backgrounds[i], self.handler.getGameScreenSize())
 
@@ -46,10 +38,15 @@ class PlayingState(IState.IState):
         self.currentChoice = 0
 
         # Character
-        self.character = pygame.image.load("../res/game/character/flusterlook_1.png")
-        self.ext = self.character.get_rect()[2:4]
+        self.expressions = []
+        self.expressionsName = ["blush", "blushSmile", "sad", "pointSmile", "smile0", "smile1", "curious"]
         size = 0.8
-        self.character = pygame.transform.scale(self.character, (int(self.ext[0] * size), int(self.ext[1] * size)))
+        for i in range(len(self.expressionsName)):
+            self.expressions.append(pygame.image.load(f"../res/game/character/{i}.png"))
+            self.ext = self.expressions[i].get_rect()[2:4]
+            self.expressions[i] = pygame.transform.scale(self.expressions[i], (int(self.ext[0] * size), int(self.ext[1] * size)))
+        self.characterPos = self.expressions[i].get_rect(midbottom=(self.handler.getGameScreenSize()[0] / 2, (self.handler.getGameScreenSize()[1] / 2) + 450))
+        self.currentExpression = ""
 
         #  Dialogue message
         file = open("../res/game/dialogues/dialogues.json")
@@ -83,12 +80,14 @@ class PlayingState(IState.IState):
         if self.dialogue["name"] == "you":
             if self.dialogue["type"] == "question":
                 self.isInChoices = True
-            else:
-                self.speaker = self.dialogue["name"]
         else:
             self.speaker = self.dialogue["name"]
 
+        self.speaker = self.dialogue["name"]
+
         self.speakerName = self.chalkFont.render(self.speaker, True, "White")
+
+        self.currentScene = self.backgroundNames.index(self.dialogue["background"])
 
         self.updateTextScroll()
 
@@ -98,12 +97,9 @@ class PlayingState(IState.IState):
         if event.type == pygame.MOUSEBUTTONDOWN:
             if not self.isInChoices:
                 if self.homeButtonRect.collidepoint(mousePos):
+                    pygame.mixer.music.load("../res/home/music/door.ogg")
+                    pygame.mixer.music.play(-1)
                     self.stateMachine.change("homeState")
-
-                elif self.settingsButtonRect.collidepoint(mousePos):
-                    self.stateMachine.change("settingsState")
-                elif self.saveButtonRect.collidepoint(mousePos):
-                    print("saved!")
             else:
                 for i in range(len(self.arrChoice)):
                     if self.arrChoice[i].collidepoint(mousePos) and self.isMouseReleased:
@@ -113,11 +109,15 @@ class PlayingState(IState.IState):
                             self.nextDialogue()
                             response = {
                                 'name': 'isla',
+                                'expression': self.dialogue["expression"],
+                                'background': self.dialogue["background"],
                                 'dialogue': self.dialogue["dialogue"]
                             }
                         else:
                             response = {
                                 'name': 'isla',
+                                'expression': self.dialogue["expressions"][i],
+                                'background': self.dialogue["background"],
                                 'dialogue': self.dialogue["responses"][i]
                             }
                         self.dialogue = json.loads(json.dumps(response))
@@ -127,11 +127,7 @@ class PlayingState(IState.IState):
             self.isMouseReleased = True
 
         elif event.type == pygame.KEYDOWN:
-            if event.key == pygame.K_RIGHT and self.currentScene < self.sceneCount - 1:
-                self.currentScene += 1
-            elif event.key == pygame.K_LEFT and self.currentScene > 0:
-                self.currentScene -= 1
-            elif event.key == pygame.K_RETURN and self.activeDialogueIndex < len(self.dialogues) - 1 and not self.isInChoices:
+            if event.key == pygame.K_RETURN and self.activeDialogueIndex < len(self.dialogues) - 1 and not self.isInChoices:
                 self.activeDialogueIndex += 1
                 self.nextDialogue()
             elif event.key == pygame.K_r:
@@ -139,17 +135,16 @@ class PlayingState(IState.IState):
 
     def render(self):
         self.handler.getScreen().blit(self.backgrounds[self.currentScene], (0, 0))
-        if not self.dialogue["name"] == "narrator":
-            self.handler.getScreen().blit(self.character, (200, -100))
+        if not self.dialogue["expression"] == "none":
+            self.handler.getScreen().blit(self.expressions[self.expressionsName.index(self.dialogue["expression"])], self.characterPos)
         self.handler.getScreen().blit(self.dialogueBox, self.dialogueBoxRect)
 
         # Buttons
         self.handler.getScreen().blit(self.homeButton, self.homeButtonRect)
-        self.handler.getScreen().blit(self.settingsButton, self.settingsButtonRect)
-        self.handler.getScreen().blit(self.saveButton, self.saveButtonRect)
 
         # Dialogue text
-        self.displayMultiLinedText(self.textDisplayed, (560, 800), self.chalkFont, "white")
+        dialogueTextPos = ((self.handler.getGameScreenSize()[0] / 2) - 400, (self.handler.getGameScreenSize()[1] / 2) + 270)
+        self.displayMultiLinedText(self.textDisplayed, dialogueTextPos, self.chalkFont, "white")
         self.handler.getScreen().blit(self.speakerName, self.speakerNameRect)
 
         # Choices box

@@ -13,7 +13,7 @@ class Game:
         pygame.init()
         pygame.mixer.init()
 
-        self.states = ["homeState", "playingState", "settingsState"]
+        self.states = ["homeState", "playingState"]
         self.currentState = self.states[1]
 
         self.screen = pygame.display.set_mode((1920, 1080), pygame.FULLSCREEN | pygame.HWSURFACE | pygame.NOFRAME,
@@ -35,10 +35,11 @@ class Game:
         # Add states
         self.stateMachine.add(self.states[0], self.homeState)
         self.stateMachine.add(self.states[1], self.gameState)
-        self.stateMachine.add(self.states[2], self.settingsState)
 
         # Initial state
         self.stateMachine.change(self.states[0])
+
+        self.hasChanged = False
 
         print("----------------------------------")
         print(f"Execution Time: {time.time() - startTime}")
